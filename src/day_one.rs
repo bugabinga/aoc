@@ -1,6 +1,6 @@
 //! https://adventofcode.com/2018/day/1
 
-const INPUT:&'static str = include_str!("day_one_input.txt");
+const INPUT:&str = include_str!("day_one_input.txt");
 
 /// --- Day 1: Chronal Calibration ---
 /// "We've detected some temporal anomalies," one of Santa's Elves at the Temporal Anomaly Research and Detection Instrument Station tells you. She sounded pretty worried when she called you down here. "At 500-year intervals into the past, someone has been changing Santa's history!"
@@ -21,10 +21,10 @@ const INPUT:&'static str = include_str!("day_one_input.txt");
 /// Starting with a frequency of zero, what is the resulting frequency after all of the changes in frequency have been applied?
 pub fn part_one() -> i32 {
     // input frequencies
-    return INPUT
+    INPUT
         .lines()
         .map(|line| line.parse::<i32>().expect("Input is trusted!"))
-        .sum();
+        .sum()
 }
 
 /// --- Part Two ---
@@ -54,7 +54,7 @@ pub fn part_two() -> i32 {
     // it is easy to imagine frequency sequences that loop forever. ignoring it :)
     for frequency in frequency_stream {
         known_frequencies.push(current_frequency);
-        current_frequency = current_frequency + frequency;
+        current_frequency += frequency;
         if known_frequencies.contains(&current_frequency){
            break
         }

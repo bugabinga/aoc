@@ -1,6 +1,6 @@
 //! https://adventofcode.com/2018/day/2
 
-const INPUT:&'static str = include_str!("day_two_input.txt");
+const INPUT: &str = include_str!("day_two_input.txt");
 
 ///--- Day 2: Inventory Management System ---
 ///You stop falling through time, catch your breath, and check the screen on the device. "Destination reached. Current Year: 1518. Current Location: North Pole Utility Closet 83N10." You made it! Now, to find those anomalies.
@@ -31,21 +31,21 @@ pub fn part_one() -> u32 {
         for letter in id.chars() {
             let new_amount = match count.get(&letter) {
                 Some(amount) => amount + 1,
-                None         => 1,
+                None => 1,
             };
             count.insert(letter, new_amount);
         }
 
         for &letter_count in count.values() {
             if letter_count == 2 {
-                amount_of_twos = amount_of_twos + 1;
-                break
+                amount_of_twos += 1;
+                break;
             }
         }
         for &letter_count in count.values() {
             if letter_count == 3 {
-                amount_of_threes = amount_of_threes + 1;
-                break
+                amount_of_threes += 1;
+                break;
             }
         }
     }
@@ -67,3 +67,34 @@ pub fn part_one() -> u32 {
 ///What letters are common between the two correct box IDs? (In the example above, this is found by removing the differing character from either ID, producing fgij.)
 pub fn part_two() -> String {
     let ids = INPUT.lines();
+    let ids2 = INPUT.lines();
+    for id in ids {
+        'ids2_loop: for id2 in ids2.clone() {
+            if id == id2 {
+                continue;
+            }
+            let mut id_chars = id.chars();
+            let mut id2_chars = id2.chars();
+            let mut mismatch_count = 0;
+            let mut result = String::new();
+            for id_char in id_chars {
+                if let Some(id2_char) = id2_chars.next() {
+                    if id_char == id2_char {
+                        result.push(id_char);
+                    } else {
+                        mismatch_count += 1;
+                    }
+                } else {
+                    mismatch_count += 1;
+                }
+                if mismatch_count > 1 {
+                    continue 'ids2_loop;
+                }
+            }
+            if mismatch_count <= 1 {
+                return result.to_string();
+            }
+        }
+    }
+    panic!("no results matched");
+}
