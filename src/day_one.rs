@@ -1,6 +1,6 @@
 //! https://adventofcode.com/2018/day/1
 
-const INPUT:&str = include_str!("day_one_input.txt");
+const INPUT: &str = include_str!("day_one_input.txt");
 
 /// --- Day 1: Chronal Calibration ---
 /// "We've detected some temporal anomalies," one of Santa's Elves at the Temporal Anomaly Research and Detection Instrument Station tells you. She sounded pretty worried when she called you down here. "At 500-year intervals into the past, someone has been changing Santa's history!"
@@ -50,13 +50,13 @@ pub fn part_two() -> i32 {
         .map(|line| line.parse::<i32>().expect("Input is trusted!"))
         .cycle();
     let mut current_frequency = 0;
-    let mut known_frequencies = vec!();
+    let mut known_frequencies = vec![];
     // it is easy to imagine frequency sequences that loop forever. ignoring it :)
     for frequency in frequency_stream {
         known_frequencies.push(current_frequency);
         current_frequency += frequency;
-        if known_frequencies.contains(&current_frequency){
-           break
+        if known_frequencies.contains(&current_frequency) {
+            break;
         }
     }
     current_frequency
